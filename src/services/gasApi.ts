@@ -3,6 +3,7 @@ import { INITIAL_CARDS, INITIAL_DICTIONARIES, INITIAL_UK_DIRECTORY, INITIAL_USER
 
 const GAS_URL_KEY = 'crmGasWebAppUrl';
 const GAS_MODE_KEY = 'crmGasMode'; // 'live' | 'demo'
+const DEFAULT_GAS_URL = 'https://script.google.com/macros/s/AKfycbxOK8qTG_4KHmy9Xl9eeWLg0cvUXY4nuJA74un7R4wkCCcnlX27QEHyIzrrRcbvr0cXTQ/exec';
 const STORAGE_CARDS_KEY = 'crmStoredCards';
 const STORAGE_DICTS_KEY = 'crmStoredDicts';
 const STORAGE_UK_KEY = 'crmStoredUK';
@@ -10,7 +11,7 @@ const STORAGE_DOCS_KEY = 'crmStoredDocs';
 
 export class GasApiService {
   static getGasUrl(): string {
-    return localStorage.getItem(GAS_URL_KEY) || '';
+    return localStorage.getItem(GAS_URL_KEY) || DEFAULT_GAS_URL;
   }
 
   static setGasUrl(url: string) {
