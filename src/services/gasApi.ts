@@ -29,6 +29,10 @@ export class GasApiService {
     localStorage.setItem(GAS_MODE_KEY, isDemo ? 'demo' : 'live');
   }
 
+  private static isGitHubPages(): boolean {
+    return typeof window !== 'undefined' && window.location.hostname.endsWith('.github.io');
+  }
+
   // Generic request dispatcher
   private static async request(action: string, payload: Record<string, any> = {}): Promise<any> {
     const isDemo = this.isDemoMode();
@@ -39,18 +43,24 @@ export class GasApiService {
     }
 
     try {
-      // Use proxy to avoid CORS and redirect issues with Google Apps Script
-      const res = await fetch('/api/gas-proxy', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          url: gasUrl,
-          payload: { action, ...payload },
-        }),
-      });
+      const res = this.isGitHubPages()
+        ? await fetch(gasUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ action, ...payload }),
+            redirect: 'follow',
+          })
+        : await fetch('/api/gas-proxy', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              url: gasUrl,
+              payload: { action, ...payload },
+            }),
+          });
 
       if (!res.ok) {
-        throw new Error(`HTTP ${res.status}: Ошибка обращения к прокси`);
+        throw new Error(`HTTP ${res.status}: Ошибка обращения к Google Apps Script`);
       }
 
       const json = await res.json();
