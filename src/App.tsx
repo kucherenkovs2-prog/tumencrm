@@ -337,7 +337,7 @@ export default function App() {
                     }`}
                   ></span>
                   <span className="text-xs font-bold text-slate-700">
-                    {isDemoMode ? 'Демо-режим' : 'Google Sheets'}
+                    {isDemoMode ? 'Демо-режим' : 'Сервер'}
                   </span>
                   <span className="text-xs text-slate-400 font-medium">({cards.length} объектов)</span>
                 </div>

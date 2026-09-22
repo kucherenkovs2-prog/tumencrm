@@ -81,7 +81,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               }`}
             ></span>
             <span className="font-medium truncate">
-              {isDemoMode ? 'Демо-база данных' : 'Google Apps Script'}
+              {isDemoMode ? 'Демо-база данных' : 'Сервер'}
             </span>
           </button>
           <div className="flex items-center gap-1">

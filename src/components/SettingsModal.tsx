@@ -93,8 +93,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               <Database className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-slate-900">Интеграция с Google Таблицами</h2>
-              <p className="text-xs text-slate-500">Google Apps Script Web App Backend</p>
+              <h2 className="text-lg font-bold text-slate-900">Интеграция с сервером</h2>
+              <p className="text-xs text-slate-500">Сервер приложения</p>
             </div>
           </div>
           <button
@@ -122,11 +122,11 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     : 'bg-white text-slate-700 border-slate-200 hover:border-blue-300'
                 }`}
               >
-                <div className="font-bold text-sm">Google Apps Script</div>
+                <div className="font-bold text-sm">Сервер</div>
                 <div
                   className={`text-xs mt-0.5 ${!isDemo ? 'text-blue-100' : 'text-slate-400'}`}
                 >
-                  Боевая Google Таблица
+                  Рабочая база данных
                 </div>
               </button>
 
@@ -153,7 +153,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           {!isDemo && (
             <div className="space-y-2">
               <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-                URL веб-приложения Google Apps Script (/exec)
+                URL веб-приложения сервера (/exec)
               </label>
               <div className="relative">
                 <Link className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -236,7 +236,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2 text-xs text-slate-600">
             <h4 className="font-bold text-slate-800 flex items-center gap-1.5">
               <HelpCircle className="w-4 h-4 text-blue-600" />
-              Инструкция по подключению Google Таблицы:
+              Инструкция по подключению сервера:
             </h4>
             <ol className="list-decimal list-inside space-y-1.5 text-[11px] leading-relaxed text-slate-600 pl-1">
               <li>
@@ -253,7 +253,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 </code>
                 .
               </li>
-              <li>Вставьте ваш код Google Apps Script в редактор и сохраните.</li>
+              <li>Вставьте код сервера в редактор и сохраните.</li>
               <li>
                 Нажмите:{' '}
                 <code className="bg-slate-200/70 px-1 py-0.5 rounded text-slate-800 font-mono">

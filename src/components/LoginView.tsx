@@ -78,7 +78,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
               }`}
             ></span>
             <span>
-              {isDemoMode ? 'Режим: Автономный / Демо' : 'Подключение: Google Apps Script'}
+              {isDemoMode ? 'Режим: Автономный / Демо' : 'Подключение: Сервер'}
             </span>
           </div>
         </div>

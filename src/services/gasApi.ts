@@ -61,7 +61,7 @@ export class GasApiService {
           });
 
       if (!res.ok) {
-        throw new Error(`HTTP ${res.status}: Ошибка обращения к Google Apps Script`);
+        throw new Error(`HTTP ${res.status}: Ошибка обращения к серверу`);
       }
 
       const json = await res.json();
