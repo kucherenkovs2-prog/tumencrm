@@ -41,22 +41,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   return (
     <>
-      {/* Mobile Backdrop */}
-      {isOpen && (
-        <div
-          onClick={onClose}
-          className="fixed inset-0 bg-slate-900/50 z-40 md:hidden backdrop-blur-sm transition-opacity"
-        />
-      )}
-
       {/* Sidebar Container */}
       <aside
-        className={`fixed md:static inset-y-0 left-0 w-72 md:w-64 bg-white border-r border-slate-100 z-50 transition-transform duration-300 md:translate-x-0 flex flex-col h-full shadow-2xl md:shadow-none ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
+        className="fixed md:static inset-x-0 bottom-0 top-auto md:inset-y-0 md:left-0 w-full md:w-64 bg-white border-t md:border-t-0 md:border-r border-slate-100 z-50 flex flex-col h-[76px] md:h-full shadow-[0_-8px_24px_rgba(15,23,42,0.08)] md:shadow-none"
       >
         {/* Brand Header */}
-        <div className="p-5 border-b border-slate-100 flex items-center justify-between">
+        <div className="hidden md:flex p-5 border-b border-slate-100 items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-md shadow-blue-500/20 shrink-0">
               <Shield className="w-5 h-5" />
@@ -79,7 +69,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         {/* Sync / Database Status Pill */}
-        <div className="px-4 py-3 bg-slate-50/70 border-b border-slate-100 flex items-center justify-between text-xs">
+        <div className="hidden md:flex px-4 py-3 bg-slate-50/70 border-b border-slate-100 items-center justify-between text-xs">
           <button
             onClick={onOpenSettings}
             className="flex items-center gap-2 text-slate-600 hover:text-blue-600 transition truncate"
@@ -114,13 +104,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         {/* Navigation Menu */}
-        <nav className="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto">
+        <nav className="flex-1 flex md:block items-stretch justify-around gap-1 px-1.5 py-1.5 md:px-3 md:py-4 md:space-y-1.5 overflow-y-auto">
           <button
             onClick={() => {
               onSelectTab('kanban');
               onClose();
             }}
-            className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl transition-all ${
+            className={`flex-1 md:w-full md:flex items-center justify-center md:justify-between px-1 md:px-3.5 py-1.5 md:py-3 rounded-xl transition-all ${
               activeTab === 'kanban'
                 ? 'bg-blue-50 text-blue-700 font-semibold shadow-sm'
                 : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium'
@@ -128,10 +118,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
           >
             <div className="flex items-center gap-3">
               <Kanban className="w-5 h-5 text-current" />
-              <span>Воронка (Канбан)</span>
+              <span className="text-[10px] leading-tight text-center md:text-sm">Канбан</span>
             </div>
             <span
-              className={`text-xs px-2 py-0.5 rounded-full font-bold ${
+              className={`hidden md:inline text-xs px-2 py-0.5 rounded-full font-bold ${
                 activeTab === 'kanban' ? 'bg-blue-200/70 text-blue-800' : 'bg-slate-100 text-slate-500'
               }`}
             >
@@ -151,7 +141,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             }`}
           >
             <CalendarDays className="w-5 h-5 text-current" />
-            <span>Календарь</span>
+            <span className="text-[10px] leading-tight text-center md:text-sm">Календарь</span>
           </button>
 
           <button
@@ -166,12 +156,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
             }`}
           >
             <Building2 className="w-5 h-5 text-current" />
-            <span>Справочник УК</span>
+            <span className="text-[10px] leading-tight text-center md:text-sm">Справочник УК</span>
           </button>
         </nav>
 
         {/* User Card & Logout */}
-        <div className="p-4 border-t border-slate-100 bg-white">
+        <div className="hidden md:block p-4 border-t border-slate-100 bg-white">
           <div className="flex items-center gap-3 px-1 mb-3.5">
             <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-sm uppercase shrink-0 shadow-inner">
               {user.fio ? user.fio.charAt(0) : 'U'}

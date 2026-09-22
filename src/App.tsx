@@ -9,7 +9,7 @@ import { UKDirectoryView } from './components/UKDirectoryView';
 import { AddressModal } from './components/AddressModal';
 import { SettingsModal } from './components/SettingsModal';
 import { Toast } from './components/Toast';
-import { Menu, RefreshCw, Settings, Shield } from 'lucide-react';
+import { RefreshCw, Settings, Shield } from 'lucide-react';
 
 const AUTH_STORAGE_KEY = 'crmAuthData';
 
@@ -235,7 +235,7 @@ export default function App() {
   }, [user, fetchData]);
 
   return (
-    <div className="flex h-screen w-full bg-slate-50 overflow-hidden font-sans text-slate-800 antialiased">
+    <div className="flex h-[100dvh] w-full bg-slate-50 overflow-hidden font-sans text-slate-800 antialiased">
       {/* Toast Alert */}
       <Toast toast={toast} onClose={hideToast} />
 
@@ -266,15 +266,26 @@ export default function App() {
           />
 
           {/* Main Area */}
-          <div className="flex-1 flex flex-col h-full min-w-0 overflow-hidden bg-slate-50/60">
+          <div className="flex-1 flex flex-col h-full min-w-0 overflow-hidden bg-slate-50/60 pb-[76px] md:pb-0">
             {/* Mobile Top Header */}
             <header className="md:hidden bg-white border-b border-slate-100 px-4 py-3 flex items-center justify-between sticky top-0 z-30 shadow-sm shrink-0">
-              <button
-                onClick={() => setIsSidebarOpen(true)}
-                className="p-2 text-slate-600 hover:text-blue-600 bg-slate-50 rounded-xl"
-              >
-                <Menu className="w-5 h-5" />
-              </button>
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={handleManualRefresh}
+                  disabled={isPolling}
+                  className="p-2 text-slate-600 hover:text-blue-600 bg-slate-50 rounded-xl disabled:opacity-50"
+                  aria-label="Обновить данные"
+                >
+                  <RefreshCw className={`w-4 h-4 ${isPolling ? 'animate-spin' : ''}`} />
+                </button>
+                <button
+                  onClick={() => setIsSettingsOpen(true)}
+                  className="p-2 text-slate-600 hover:text-blue-600 bg-slate-50 rounded-xl"
+                  aria-label="Настройки интеграции"
+                >
+                  <Settings className="w-4 h-4" />
+                </button>
+              </div>
 
               <div className="text-center">
                 <span className="font-bold text-base text-slate-800 block leading-tight">

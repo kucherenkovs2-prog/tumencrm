@@ -61,25 +61,22 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
 }) => {
   // Filtered cards based on search query
   const filteredCards = useMemo(() => {
-    const q = searchQuery.toLowerCase().trim();
-    if (!q) return cards;
+    const normalize = (value: unknown) =>
+      String(value ?? '')
+        .toLocaleLowerCase('ru-RU')
+        .replace(/[ё]/g, 'е')
+        .replace(/[^\p{L}\p{N}]+/gu, ' ')
+        .trim();
+    const terms = normalize(searchQuery).split(/\s+/).filter(Boolean);
+    if (!terms.length) return cards;
 
     return cards.filter(card => {
-      const addr = (card['Адрес'] || '').toLowerCase();
-      const addrFias = (card['Адрес (ФИАС)'] || '').toLowerCase();
-      const fio = (card['ФИО старшего'] || '').toLowerCase();
-      const contact = (card['Контакты старшего'] || '').toLowerCase();
-      const respPBD = (card['ФИО ответственный ПБД'] || '').toLowerCase();
-      const uk = (card['Управляющая компания'] || '').toLowerCase();
-
-      return (
-        addr.includes(q) ||
-        addrFias.includes(q) ||
-        fio.includes(q) ||
-        contact.includes(q) ||
-        respPBD.includes(q) ||
-        uk.includes(q)
-      );
+      const searchableText = normalize(Object.values(card).join(' '));
+      const compactSearchableText = searchableText.replace(/\s/g, '');
+      return terms.every(term => {
+        const compactTerm = term.replace(/\s/g, '');
+        return searchableText.includes(term) || compactSearchableText.includes(compactTerm);
+      });
     });
   }, [cards, searchQuery]);
 
@@ -150,7 +147,7 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
   };
 
   return (
-    <div className="h-full flex flex-col p-4 md:p-6 overflow-hidden">
+    <div className="h-full flex flex-col p-3 sm:p-4 md:p-6 overflow-hidden">
       {/* Search Header Bar */}
       <div className="mb-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 shrink-0">
         <div className="relative flex-1 max-w-lg">
@@ -159,8 +156,9 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
             type="text"
             value={searchQuery}
             onChange={e => onSearchChange(e.target.value)}
-            placeholder="Поиск по адресу, ФИАС, ФИО старшего, телефону..."
-            className="w-full pl-10 pr-10 py-2.5 bg-white border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition shadow-sm placeholder:text-slate-400"
+            placeholder="Адрес, ФИО, телефон, УК..."
+            aria-label="Поиск по объектам"
+            className="w-full pl-10 pr-10 py-3 bg-white border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition shadow-sm placeholder:text-slate-400"
           />
           {searchQuery && (
             <button
