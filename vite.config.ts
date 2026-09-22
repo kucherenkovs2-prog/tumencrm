@@ -5,6 +5,8 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
+    // The app is deployed as a project site at /tumencrm/ on GitHub Pages.
+    base: '/tumencrm/',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
