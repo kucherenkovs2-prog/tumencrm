@@ -19,30 +19,27 @@ export const UKDirectoryView: React.FC<UKDirectoryViewProps> = ({ ukDirectory })
   const [searchQuery, setSearchQuery] = useState('');
 
   const filtered = useMemo(() => {
-    const q = searchQuery.toLowerCase().trim();
-    if (!q) return ukDirectory;
+    const normalize = (value: unknown) =>
+      String(value ?? '')
+        .toLocaleLowerCase('ru-RU')
+        .replace(/[ё]/g, 'е')
+        .replace(/[^\p{L}\p{N}]+/gu, ' ')
+        .trim();
+    const terms = normalize(searchQuery).split(/\s+/).filter(Boolean);
+    if (!terms.length) return ukDirectory;
 
     return ukDirectory.filter(uk => {
-      const full = (uk['Полное название'] || '').toLowerCase();
-      const short = (uk['Сокращенное название'] || '').toLowerCase();
-      const inn = (uk['ИНН'] || '').toLowerCase();
-      const ogrn = (uk['ОГРН'] || '').toLowerCase();
-      const boss = (uk['Ответственное лицо'] || '').toLowerCase();
-      const region = (uk['Субъект РФ'] || '').toLowerCase();
-
-      return (
-        full.includes(q) ||
-        short.includes(q) ||
-        inn.includes(q) ||
-        ogrn.includes(q) ||
-        boss.includes(q) ||
-        region.includes(q)
-      );
+      const searchableText = normalize(Object.values(uk).join(' '));
+      const compactSearchableText = searchableText.replace(/\s/g, '');
+      return terms.every(term => {
+        const compactTerm = term.replace(/\s/g, '');
+        return searchableText.includes(term) || compactSearchableText.includes(compactTerm);
+      });
     });
   }, [ukDirectory, searchQuery]);
 
   return (
-    <div className="h-full flex flex-col p-4 md:p-6 overflow-y-auto max-w-7xl mx-auto w-full">
+    <div className="h-full flex flex-col p-3 sm:p-4 md:p-6 overflow-y-auto max-w-7xl mx-auto w-full">
       {/* Search Bar */}
       <div className="mb-6 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 shrink-0">
         <div className="relative flex-1 max-w-md">
@@ -51,7 +48,8 @@ export const UKDirectoryView: React.FC<UKDirectoryViewProps> = ({ ukDirectory })
             type="text"
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
-            placeholder="Поиск по названию, ИНН, ОГРН, руководителю..."
+            placeholder="Название, ИНН, ОГРН, адрес, телефон..."
+            aria-label="Поиск по справочнику управляющих компаний"
             className="w-full pl-11 pr-10 py-3 bg-white border border-slate-200 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition shadow-sm placeholder:text-slate-400"
           />
           {searchQuery && (

@@ -43,7 +43,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     <>
       {/* Sidebar Container */}
       <aside
-        className="fixed md:static inset-x-0 bottom-0 top-auto md:inset-y-0 md:left-0 w-full md:w-64 bg-white border-t md:border-t-0 md:border-r border-slate-100 z-50 flex flex-col h-[76px] md:h-full shadow-[0_-8px_24px_rgba(15,23,42,0.08)] md:shadow-none"
+        className="fixed md:static inset-x-0 bottom-0 top-auto md:inset-y-0 md:left-0 w-full md:w-64 bg-white/95 backdrop-blur-lg border-t md:border-t-0 md:border-r border-slate-200/80 z-50 flex flex-col h-[76px] md:h-full shadow-[0_-8px_24px_rgba(15,23,42,0.1)] md:shadow-none"
       >
         {/* Brand Header */}
         <div className="hidden md:flex p-5 border-b border-slate-100 items-center justify-between">
@@ -104,21 +104,23 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         {/* Navigation Menu */}
-        <nav className="flex-1 flex md:block items-stretch justify-around gap-1 px-1.5 py-1.5 md:px-3 md:py-4 md:space-y-1.5 overflow-y-auto">
+        <nav className="flex-1 flex md:block items-stretch justify-around gap-1 px-2 py-2 md:px-3 md:py-4 md:space-y-1.5 overflow-y-auto">
           <button
             onClick={() => {
               onSelectTab('kanban');
               onClose();
             }}
-            className={`flex-1 md:w-full md:flex items-center justify-center md:justify-between px-1 md:px-3.5 py-1.5 md:py-3 rounded-xl transition-all ${
+            title="Канбан"
+            aria-label="Канбан"
+            className={`group flex-1 md:w-full md:flex items-center justify-center md:justify-between px-1 md:px-3.5 py-1.5 md:py-3 rounded-2xl transition-all ${
               activeTab === 'kanban'
-                ? 'bg-blue-50 text-blue-700 font-semibold shadow-sm'
-                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium'
+                ? 'bg-blue-600 text-white font-semibold shadow-md shadow-blue-500/25'
+                : 'text-slate-500 hover:bg-slate-100 hover:text-slate-900 font-medium'
             }`}
           >
             <div className="flex items-center gap-3">
               <Kanban className="w-5 h-5 text-current" />
-              <span className="text-[10px] leading-tight text-center md:text-sm">Канбан</span>
+              <span className="hidden md:inline text-sm">Канбан</span>
             </div>
             <span
               className={`hidden md:inline text-xs px-2 py-0.5 rounded-full font-bold ${
@@ -134,14 +136,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
               onSelectTab('calendar');
               onClose();
             }}
-            className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all ${
+            title="Календарь"
+            aria-label="Календарь"
+            className={`flex-1 md:w-full flex items-center justify-center md:justify-start gap-3 px-1 md:px-3.5 py-1.5 md:py-3 rounded-2xl transition-all ${
               activeTab === 'calendar'
-                ? 'bg-blue-50 text-blue-700 font-semibold shadow-sm'
-                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium'
+                ? 'bg-blue-600 text-white font-semibold shadow-md shadow-blue-500/25'
+                : 'text-slate-500 hover:bg-slate-100 hover:text-slate-900 font-medium'
             }`}
           >
             <CalendarDays className="w-5 h-5 text-current" />
-            <span className="text-[10px] leading-tight text-center md:text-sm">Календарь</span>
+            <span className="hidden md:inline text-sm">Календарь</span>
           </button>
 
           <button
@@ -149,14 +153,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
               onSelectTab('ukDirectory');
               onClose();
             }}
-            className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all ${
+            title="Справочник УК"
+            aria-label="Справочник УК"
+            className={`flex-1 md:w-full flex items-center justify-center md:justify-start gap-3 px-1 md:px-3.5 py-1.5 md:py-3 rounded-2xl transition-all ${
               activeTab === 'ukDirectory'
-                ? 'bg-blue-50 text-blue-700 font-semibold shadow-sm'
-                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium'
+                ? 'bg-blue-600 text-white font-semibold shadow-md shadow-blue-500/25'
+                : 'text-slate-500 hover:bg-slate-100 hover:text-slate-900 font-medium'
             }`}
           >
             <Building2 className="w-5 h-5 text-current" />
-            <span className="text-[10px] leading-tight text-center md:text-sm">Справочник УК</span>
+            <span className="hidden md:inline text-sm">Справочник УК</span>
           </button>
         </nav>
 
