@@ -1,0 +1,6 @@
+{
+  "name": "CRM Управление адресами",
+  "description": "Корпоративная CRM-система управления адресной базой, воронкой ОСС, календарем выездов и синхронизацией с Google Таблицами",
+  "requestFramePermissions": ["notifications"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
